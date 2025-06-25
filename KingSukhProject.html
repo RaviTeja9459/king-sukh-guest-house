@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page Title</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    /* Title styling */
+    h2 {
+      font-size: 36px;
+      color: #333;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Highlighted text styling */
+    .highlighted-text {
+      font-size: 40px;
+      color: DeepSkyBlue;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    /* Style the body */
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+     /* Header/logo Title */
+    .header {
+      padding: 300px;
+      text-align: center;
+      color: white;
+      background-image: url("https://assets.telegraphindia.com/abp/2024/Oct/1730309235_48454113212_bc027276a1_b-compressed.jpg");
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+    }
+
+    .header h1 {
+      font-size: 40px;
+      margin: 0;
+    }
+
+    /* Navbar styling */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color:  #C5CAE9;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 10px;
+      z-index: 10;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar a {
+      color: black;
+      text-align: center;
+      padding: 14px 20px;
+      text-decoration: none;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .navbar a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    .content {
+      margin-top: 70px;
+    }
+    
+
+     .google-map {
+        position: relative;
+    }
+    /* Button styling */
+    .button {
+      background-color: #04AA6D;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }
+
+    /* Flip-box Styles */
+    .flip-box {
+      background-color: transparent;
+      width: 500px;
+      height: 600px;
+      border: 1px solid #f1f1f1;
+      perspective: 1000px;
+    }
+
+    .flip-box-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+
+    .flip-box:hover .flip-box-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-box-front, .flip-box-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+
+    .flip-box-front {
+      background-color: #bbb;
+      color: black;
+    }
+
+    .flip-box-back {
+      background-color: #555;
+      color: white;
+      transform: rotateY(180deg);
+    }
+
+    /* Flexbox for the image and About Us text */
+    .about-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 20px;
+    }
+
+    .about-container .image, .about-container .text {
+      width: 48%; /* Set both to 48% to make them side by side */
+    }
+
+    .about-container .image img {
+      width: 100%;
+      height: auto;
+    }
+    .side {
+      display: inline-block;
+      margin-right: 10px; /* Adds space between images */
+    }
+    
+     .image-container {
+      display: flex;
+      gap: 10px; /* Adds space between the images */
+    }
+    .image-container img {
+      width: 150px; /* Fixed size for the images */
+      height: 150px;
+    }
+    .about-container .text {
+      font-size: 18px;
+      text-align: left;
+    }
+  
+    .caption-container {
+      text-align: center;
+      background-color: #222;
+      padding: 2px 16px;
+      color: white;
+    }
+
+    /* Slideshow Styles */
+    .slideshow-container {
+      width: 500px;
+      height: 500px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+     
+    .active {
+      opacity: 1;
+    }
+
+    /* Navigation buttons */
+    .prev, .next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 24px;
+      padding: 10px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .prev {
+      left: 10px;
+    }
+
+    .next {
+      right: 10px;
+    }
+
+    .prev:hover, .next:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    .column {
+      float: left;
+      width: 16.66%;
+    }
+    .google-map {
+    position: relative;
+    width: 100%;
+    max-width: 600px; /* Ensures that the iframe doesn't exceed the container width */
+    margin: 0 auto; /* Centers the map */
+}
+
+.footer {
+    width: 100%;
+    background-color: #000; /* Black background for the footer */
+    padding: 2rem 0;
+    color: #fff; /* White text to contrast with the black background */
+}
+.footer__container {
+    display: grid;
+    gap: 4rem 2rem;
+    grid-template-columns: 1fr 1fr 1fr 1fr; /* Adjusted to four columns */
+}
+
+.footer__col {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer__col h4 {
+    margin-bottom: 2rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--white);
+}
+html, body {
+  margin: 0;
+  padding: 0;
+}
+.container {
+  width: 100%;          /* Make sure the container spans the full width */
+  max-width: 100%;      /* Ensure there's no max-width constraint */
+  padding: 0;           /* Optional: Reset padding if needed */
+}
+.footer__links {
+    list-style: none;
+    display: grid;
+    gap: 1rem;
+}
+
+.footer__links a {
+    color: var(--text-light);
+    transition: 0.3s;
+}
+
+.footer__links a:hover {
+    color: var(--white);
+}
+
+.footer__socials {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.footer__socials img {
+    max-width: 25px;
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+.footer__socials img:hover {
+    opacity: 1;
+}
+
+.footer__bar {
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    text-align: center;
+}
+
+/* To make sure that the columns don't overlap on smaller screens */
+@media screen and (max-width: 768px) {
+    .footer__container {
+        grid-template-columns: 1fr; /* Stack all columns vertically on smaller screens */
+    }
+}
+
+    .demo {
+      opacity: 0.6;
+    }
+
+    .active,
+    .demo:hover {
+      opacity: 1;
+    }
+    
+    .card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+.price {
+  color: grey;
+  font-size: 22px;
+}
+
+.card button {
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 70%;
+  font-size: 18px;
+}
+
+.card button:hover {
+  opacity: 0.7;
+}
+
+.service-container {
+            display: flex;
+            align-items: center; /* Align items vertically centered */
+            gap: 20px; /* Space between the image and text */
+        }
+        .container img {
+            max-width: 100%; /* Ensure image is responsive */
+            height: auto;
+            width: 300px; /* Fixed image width, you can adjust it */
+        }
+        .container .text {
+            font-size: 16px;
+            line-height: 1.5;-
+        }
+.form-center{
+	width: 50%; /* adjust to desired width */
+    margin: 0 auto; /* center the container */
+}
+
+
+span {
+	font-size: 12px;
+}
+
+a {
+	color: #333;
+	font-size: 14px;
+	text-decoration: none;
+	margin: 15px 0;
+}
+
+button {
+	border-radius: 20px;
+	border: 1px solid #C5CAE9;
+	background-color: #C5CAE9;
+	color: #FFFFFF;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 12px 45px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	transition: transform 80ms ease-in;
+}
+
+button:active {
+	transform: scale(0.95);
+}
+
+button:focus {
+	outline: none;
+}
+
+button.ghost {
+	background-color: transparent;
+	border-color: #FFFFFF;
+}
+
+
+form {
+	background-color: #FFFFFF;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 0 50px;
+	height: 100%;
+	text-align: center;
+}
+input {
+	background-color: #eee;
+	border: none;
+	padding: 12px 15px;
+	margin: 8px 0;
+	width: 100%;
+}
+
+.social-container {
+	margin: 20px 0;
+}
+
+.social-container a {
+	border: 1px solid #DDDDDD;
+	border-radius: 50%;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0 5px;
+	height: 40px;
+	width: 40px;
+}
+
+.hover-text {
+      font-size: 17px;  /* Initial size */
+      transition: font-size 0.3s ease;  /* Smooth transition */
+    }
+
+    /* When the cursor hovers over the text */
+    .hover-text:hover {
+      font-size: 25px;  /* Increased size */
+    }
+    
+    .hover-image {
+      width: 300px; /* Initial size */
+      height: auto; /* Maintain aspect ratio */
+      transition: transform 0.3s ease; /* Smooth transition */
+    }
+
+    /* When the cursor hovers over the image */
+    .hover-image:hover {
+      transform: scale(1.5); /* Increase size by 20% */
+    }
+
+
+   
+
+    
+
+    
+     .wrapper {
+    width: 800px;
+    height: 600px;
+    position: relative;
+    margin: 3% auto;
+    box-shadow: 2px 18px 70px 0px #9D9D9D;
+    overflow: hidden;
+}
+
+.t-input {
+    margin-top: 15px; /* Reduced margin for a more compact look */
+    height: 40px;
+    width: 300px;
+    border-radius: 2px;
+    border: none;
+    background-color: #444;
+    opacity: 0.6;
+    outline: none;
+    color: white; /* Set typed text color to white */
+    padding-left: 10px;
+}
+
+.text button {
+    margin-top: 20px; /* Reduced space between button and inputs */
+    height: 40px;
+    width: 140px;
+    outline: none;
+}
+
+.login-text {
+    width: 800px;
+    height: 400px; /* Reduced height to make the form more compact */
+    background: linear-gradient(to left, #ab68ca, #de67a3); 
+    position: absolute;
+    top: -300px;
+    box-sizing: border-box;
+    padding: 4%; /* Reduced padding for a more compact layout */
+    transition: all 0.5s ease-in-out;
+    z-index: 10;
+}
+
+.text input[type="text"] {
+    margin-top: 20px; /* Reduced margin */
+}
+.t{
+    margin-left: 20px;
+    color: black;
+    display: none;
+    transition: all 0.5s ease-in-out;
+    transition-delay: 0.3s;
+}
+
+.text a, .text a:visited {
+    font-size: 36px;
+    color: black;
+    text-decoration: none;  
+    font-weight: bold;
+    display: block;
+}
+
+.text hr {
+    width: 10%;
+    float: left;
+    background-color: black;
+    font-size: 16px;
+}
+
+.cta {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #696a86;
+    border: 2px solid #fff;
+    position: absolute;
+    bottom: -30px;
+    left: 370px;
+    color: black;
+    outline: none;
+    cursor: pointer;
+    z-index: 11;
+}
+
+
+.call-text {
+    width: 800px;
+    height: 450px;
+    position: absolute;
+    bottom: 0;
+    padding: 10%;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.call-text h1 {
+    font-size: 42px;
+    margin-top: 10%;
+    color: #696a86;
+}
+
+.call-text h1 span {
+    color: #333;
+    font-weight: bolder;
+}
+
+.call-text button {
+    height: 40px;
+    width: 180px;
+    border: none;
+    border-radius: 20px;
+    background: linear-gradient(to left, #ab68ca, #de67a3); 
+    color: black;
+    font-weight: bolder;
+    margin-top: 30px;
+    cursor: pointer;
+    outline: none;
+}
+
+.show-hide {
+    display: block;
+}
+
+.expand {
+    transform: translateY(300px);
+}
+input::placeholder {
+    color: white;
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- Fixed Navbar -->
+  <div class="navbar">
+    <a  class="hover-text" href="#">KingSukh Guest House</a>
+    <a  class="hover-text" href="#home">Home</a>
+    <a  class="hover-text" href="#about">About</a>
+    <a  class="hover-text" href="#services">Services</a>
+    <a  class="hover-text" href="#rooms">Rooms</a>
+    <a  class="hover-text"   href="#gallery">Gallery</a>
+    <a  class="hover-text" href="#contact">Contact</a>
+    <button class="button" onclick="window.location.href='https://wa.me/9007062180';">Book Now</button>
+  </div>
+
+  <!-- Main header with image -->
+  <div class="header">
+    <h1>Chill out and enjoy the space – it's all yours.</h1>
+    <h2 style="color:red;">-KingSukh Guest House</h2>
+  </div>
+
+  <!-- Main content section -->
+  <div class="content"  id="home">
+    <center>
+      <button class="button" onclick="window.location.href='https://wa.me/9007062180';">Book Now</button>
+      <br>
+      <div class="about-container">
+        <div class="image">
+          <div class="flip-box">
+            <div class="flip-box-inner">
+              <div class="flip-box-front">
+                <img src="https://www.kingsukhguesthouse.com/assets/out.jpg" alt="Guest House" style="width:500px;height:600px; padding:20px;max-width: 100%;display: block;" class="hover-image">
+              </div>
+              <div class="flip-box-back">
+                <br><br><br><br><br><br><br><br><br>
+                <h2 style="color:white;">KingSukh Guest House</h2>
+                <p>Your Comfort is Our Priority in Our Guest House.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text" id="about">
+          <h2>About Us:</h2>
+          <p class="highlighted-text" style=" font-family: Arial, Helvetica, sans-serif;padding-right:55px;">Create Lasting Memories Right Here!</p>
+          <p style="padding-right:100px"><i>Embark on a tranquil journey at our Kingsukh Guest House, enveloped by the scenic allure of Biharinath Hill, Baranti Hill, Susunia Hill, Joychandi Hill, Garhpanchkot, Baranti Dam, Maithon Dam, and the captivating Panchat Dam. Revel in the embrace of comfort, relish delightful meals, and unwind in our verdant garden oasis. Your ideal retreat beckons, promising a harmonious blend of nature's beauty and heartfelt hospitality. Explore the hidden gems of Purulia, creating memories that linger long after your stay.</i></p>
+          <p style="color:blue">Address: Beside Barshal Water Tank, Manpur, Barhanti, West Bengal 723156</p>
+          <a href="https://wa.me/9007062180">Contact Us:+91 9007062180</a>
+        </div>
+      </div>
+    </center>
+  </div>
+  <br>
+</div>
+
+<div id="rooms">
+<p style="padding-left: 90px;">OUR LIVING ROOM</p>
+<h1 style="padding-left: 90px;">The Most Memorable Rest</h1>
+<h1 style="padding-left: 90px;">Time Starts Here</h1>
+<div class="image-container">
+<div class="card">
+  <img src="https://www.kingsukhguesthouse.com/assets/small.jpg" alt="room1" style="width:100%" class="hover-image">
+  <h2>Cozy Haven Room</h2>
+  <p class="price">Starting from Rs. 1000/night</p>
+  <p>Escape to comfort in our Cozy Haven Room, a snug retreat designed for intimate relaxation.</p>
+  <p><button onclick="window.location.href='https://wa.me/9007062180';">Book Now</button></p>
+</div>
+<div class="card">
+  <img src="https://www.kingsukhguesthouse.com/assets/large.jpg" alt="room1" style="width:100%" class="hover-image">
+  <h2>Spacious Serenity Suite</h2>
+  <p class="price">Starting from Rs. 1500/night</p>
+  <p>Indulge in luxury and ample space in our Spacious Serenity Suite, where tranquility meets roomy elegance.</p>
+  <p><button onclick="window.location.href='https://wa.me/9007062180';">Book Now</button></p>
+</div>
+</div>
+<br>
+<br>
+
+</div>
+<div class="service-container">
+      <img src="https://drive.google.com/thumbnail?id=1NH30l9dK8L8c0mGh1CBWo9Bhi2Xu0CFg" alt="Guest House" style="width:800px;height:700px; padding:20px;max-width: 100%;display: block;padding-left: 90px;">   
+          <div class="text"         id="services">
+          <h3>SERVICES</h3>
+          <h1>Strive Only For The Best</h1>
+          <ul style="font-size:27px;">
+  <li>High Class Security</li>
+  <li>24 Hours rooms Service</li>
+  <li>Restaurent</li>
+   <li>Tourist Guide Supports</li>
+</ul>
+           </div>
+</div>
+  <h2 style="padding-left: 90px;">SnapShot Gallery:</h2>
+<p style="padding-left: 90px;font-size:25px"><i>Explore our exquisite hotel room gallery showcasing comfort, style, and elegance in every space.</i></p>
+  <!-- Slideshow Gallery -->
+  <br><div class="slideshow-container" id="gallery">
+    <!-- Slides (Images) -->
+    <img src="https://www.kingsukhguesthouse.com/assets/out.jpg" class="slide active" alt="Slide 1">
+    <img src="https://www.kingsukhguesthouse.com/assets/ayodhya.webp" class="slide" alt="Slide 2">
+    <img src="https://www.kingsukhguesthouse.com/assets/large.jpg" class="slide" alt="Slide 3">
+    <img src="https://www.kingsukhguesthouse.com/assets/palash.webp" class="slide" alt="Slide 4">
+    <img src="https://www.kingsukhguesthouse.com/assets/small.jpg" class="slide" alt="Slide 5">
+    <img src="https://www.kingsukhguesthouse.com/assets/baranti.webp" class="slide" alt="Slide 6">
+    <img src="https://www.kingsukhguesthouse.com/assets/room1.jpg" class="slide" alt="Slide 7">
+    <img src="https://www.kingsukhguesthouse.com/assets/mithonDam.webp" class="slide" alt="Slide 8">
+    <img src="https://www.kingsukhguesthouse.com/assets/recep.jpg" class="slide" alt="Slide 9">
+    <img src="https://www.kingsukhguesthouse.com/assets/flower.jpg" class="slide" alt="Slide 10">
+    <!-- Navigation buttons -->
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+
+   <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+
+    // Function to go to the next slide
+    function nextSlide() {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % totalSlides;
+        slides[currentSlide].classList.add('active');
+    }
+
+    // Function to go to the previous slide
+    function prevSlide() {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        slides[currentSlide].classList.add('active');
+    }
+
+    // Add event listeners to buttons
+    document.querySelector('.next').addEventListener('click', nextSlide);
+    document.querySelector('.prev').addEventListener('click', prevSlide);
+  </script>
+<br>
+<br>
+<br>
+
+  <div class="form-center" id="contact">
+   <div class="wrapper">
+  <div class="login-text">
+    <button class="cta"><i class="fas fa-chevron-down"></i></button>
+    <div class="t">
+      <a href="#">Send Message</a>
+      <hr>
+      <br>
+      <input type="text" placeholder="Name"  required placeholder="Short text">
+      <br>
+      <input type="text" placeholder="Phone No"   required placeholder="Short text">
+      <br>
+      <input type="text" placeholder="Email"   required placeholder="Short text">
+<br>
+      <button class="login-btn" onclick="window.location.href='https://wa.me/9007062180';">Send Message</button>
+      
+    </div>
+  </div>
+  <div class="call-text">
+    <h1>For any Queries, Feel Free to Reach Us.........</h1>
+  </div>
+</div></div>
+
+<script>
+var cta = document.querySelector(".cta");
+var check = 0;
+
+cta.addEventListener('click', function(e){
+    var text = e.target.nextElementSibling;
+    var loginText = e.target.parentElement;
+    text.classList.toggle('show-hide');
+    loginText.classList.toggle('expand');
+    if(check == 0) {
+        cta.innerHTML = "<i class='fas fa-chevron-up'></i>";
+        check++;
+    } else {
+        cta.innerHTML = "<i class='fas fa-chevron-down'></i>";
+        check = 0;
+    }
+})
+
+</script>
+
+
+<br>
+<br>
+<h2 style=" padding-left:90px;" >Reach Our Guest House:</h2>
+  <!-- Google Map Section -->
+  <div class="google-map">
+    <p style="text-align:center">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7313.003491353379!2d86.85979!3d23.586332!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f6e3fdd3ff9ebb%3A0x517a57e3f93c1807!2sKingsukh%20Guest%20House!5e0!3m2!1sen!2sin!4v1735897838109!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </p>
+  </div>
+  <footer class="footer">
+      <div class="footer__container">
+      <div class="footer__col">
+      <h4 style="padding-left: 90px;">KingSukh Guest House</h4>
+      <p class="section__description" style="padding-left: 90px;">
+        Discover a world of comfort, luxury, and adventure as you explore
+        our curated selection of hotels, making every moment of your getaway
+        truly extraordinary.
+      </p>
+      <a href="https://wa.link/at5ion" style="padding-left: 90px;">
+        <button class="btn">BOOK NOW</button>
+      </a>
+    </div>
+    <div class="footer__col">
+      <h4>QUICK LINKS</h4>
+      <ul class="footer__links">
+        <li><a href="#">Browse Destinations</a></li>
+        <li><a href="#">Special Offers & Packages</a></li>
+        <li><a href="#">Room Types & Amenities</a></li>
+        <li><a href="#">Customer Reviews & Ratings</a></li>
+        <li><a href="#">Travel Tips & Guides</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <h4>OUR SERVICES</h4>
+      <ul class="footer__links">
+        <li><a href="#">Concierge Assistance</a></li>
+        <li><a href="#">Flexible Booking Options</a></li>
+        <li><a href="#">Airport Transfers</a></li>
+        <li><a href="#">Wellness & Recreation</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <h4>CONTACT US</h4>
+      <ul class="footer__links">
+
+        <li><a href="https://maps.app.goo.gl/7wYUEB4tvR7NMHbcA">Address: Beside Barshal Water Tank, Manpur, Barhanti, West Bengal 723156</a></li>
+        <li><a href="mailto:kkghosh0099@gmail.com">kkghosh0099@gmail.com</a></li>
+        <li><a href="tel:+919007062180">+91 9007062180</a></li>
+      </ul>
+      <div class="footer__socials">
+        <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/2021_Facebook_icon.svg/2048px-2021_Facebook_icon.svg.png" alt="facebook" /></a>
+        <a href="https://www.instagram.com/kingsukhguesthouse/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/640px-Instagram_icon.png" alt="instagram" /></a>
+        <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="youtube" /></a>
+        <a href="#"><img src=" https://cdn3.iconfinder.com/data/icons/2018-social-media-logotypes/1000/2018_social_media_popular_app_logo_twitter-512.png" alt="twitter" /></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer__bar">
+    Copyright © 2024 Kingsukh Guest House. All rights reserved.
+  </div>
+</footer>
+
+<script src="https://unpkg.com/scrollreveal"></script>
+</body>
+</html>
